@@ -3,6 +3,10 @@ import pandas as pd
 import numpy as np
 import joblib
 import warnings
+import os
+
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+ROOT_DIR = os.path.abspath(os.path.join(BASE_DIR, ".."))
 
 # Suppress warnings
 warnings.filterwarnings('ignore')
@@ -32,19 +36,19 @@ st.markdown("""
 def load_artifacts():
     artifacts = {}
     try:
-
-        artifacts['oe'] = joblib.load('oe.pkl')
-        artifacts['te'] = joblib.load('te.pkl')
-        artifacts['ohn'] = joblib.load('ohn.pkl')
-        artifacts['scaler'] = joblib.load('scaler.pkl')
+        artifacts['oe'] = joblib.load(os.path.join(ROOT_DIR, "oe.pkl"))
+        artifacts['te'] = joblib.load(os.path.join(ROOT_DIR, "te.pkl"))
+        artifacts['ohn'] = joblib.load(os.path.join(ROOT_DIR, "ohn.pkl"))
+        artifacts['scaler'] = joblib.load(os.path.join(ROOT_DIR, "scaler.pkl"))
 
         artifacts['models'] = {
-            'K-Nearest Neighbors': joblib.load('knn.pkl'),
-            'Decision Tree': joblib.load('DT.pkl'),
-            'Random Forest': joblib.load('RF.pkl'),
-            'Support Vector Machine': joblib.load('SVM.pkl'),
-            'XGBOOST': joblib.load('XGB.pkl')
-        }
+            'K-Nearest Neighbors': joblib.load(os.path.join(ROOT_DIR, "knn.pkl")),
+            'Decision Tree': joblib.load(os.path.join(ROOT_DIR, "DT.pkl")),
+            'Random Forest': joblib.load(os.path.join(ROOT_DIR, "RF.pkl")),
+            'Support Vector Machine': joblib.load(os.path.join(ROOT_DIR, "SVM.pkl")),
+            'XGBOOST': joblib.load(os.path.join(ROOT_DIR, "XGB.pkl")),
+            }
+
     except FileNotFoundError as e:
         st.error(f"Error loading files: {e}")
         return None
