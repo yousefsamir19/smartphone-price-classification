@@ -36,18 +36,17 @@ st.markdown("""
 def load_artifacts():
     artifacts = {}
     try:
-        artifacts['oe'] = joblib.load(os.path.join(ROOT_DIR, "oe.pkl"))
-        artifacts['te'] = joblib.load(os.path.join(ROOT_DIR, "te.pkl"))
-        artifacts['ohn'] = joblib.load(os.path.join(ROOT_DIR, "ohn.pkl"))
-        artifacts['scaler'] = joblib.load(os.path.join(ROOT_DIR, "scaler.pkl"))
+        artifacts['oe'] = joblib.load(os.path.join(BASE_DIR, "oe.pkl"))
+        artifacts['te'] = joblib.load(os.path.join(BASE_DIR, "te.pkl"))
+        artifacts['ohn'] = joblib.load(os.path.join(BASE_DIR, "ohn.pkl"))
+        artifacts['scaler'] = joblib.load(os.path.join(BASE_DIR, "scaler.pkl"))
 
         artifacts['models'] = {
-            'K-Nearest Neighbors': joblib.load(os.path.join(ROOT_DIR, "knn.pkl")),
-            'Decision Tree': joblib.load(os.path.join(ROOT_DIR, "DT.pkl")),
-            'Random Forest': joblib.load(os.path.join(ROOT_DIR, "RF.pkl")),
-            'Support Vector Machine': joblib.load(os.path.join(ROOT_DIR, "SVM.pkl")),
-            'XGBOOST': joblib.load(os.path.join(ROOT_DIR, "XGB.pkl")),
-            }
+            'K-Nearest Neighbors': joblib.load(os.path.join(BASE_DIR, "knn.pkl")),
+            'Decision Tree': joblib.load(os.path.join(BASE_DIR, "DT.pkl")),
+            'Random Forest': joblib.load(os.path.join(BASE_DIR, "RF.pkl")),
+            'Support Vector Machine': joblib.load(os.path.join(BASE_DIR, "SVM.pkl")),
+            'XGBOOST': joblib.load(os.path.join(BASE_DIR, "XGB.pkl")),}
 
     except FileNotFoundError as e:
         st.error(f"Error loading files: {e}")
