@@ -14,28 +14,39 @@ st.set_page_config(
     layout="wide"
 )
 
+#abd alkarem was here ;
+st.markdown("""
+    <style>
+        .stApp {
+            background-color: #1a0b2e;
+            color: white;
+        }
+    </style>
+""", unsafe_allow_html=True)
+#abd alkarem was here ;
+
+
+
 # --- 1. Load Models, Encoders, and Scaler ---
 @st.cache_resource
 def load_artifacts():
     artifacts = {}
     try:
-        # Load Encoders
-        artifacts['oe'] = joblib.load('C:\\smartphone price classification\\smartphone-price-classification\\Smart Phone Prices Prediction\\oe.pkl')
-        artifacts['te'] = joblib.load('C:\\smartphone price classification\\smartphone-price-classification\\Smart Phone Prices Prediction\\te.pkl')
-        artifacts['ohn'] = joblib.load('C:\\smartphone price classification\\smartphone-price-classification\\Smart Phone Prices Prediction\\ohn.pkl')
 
-        # Load Scaler
-        artifacts['scaler'] = joblib.load('C:\\smartphone price classification\\smartphone-price-classification\\Smart Phone Prices Prediction\\scaler.pkl')
-        
-        # Load Models
+        artifacts['oe'] = joblib.load('S:\Projects\Smart Phone Prices Prediction\smartphone-price-classification\Smart Phone Prices Prediction\oe.pkl')
+        artifacts['te'] = joblib.load('S:\Projects\Smart Phone Prices Prediction\smartphone-price-classification\Smart Phone Prices Prediction\\te.pkl')
+        artifacts['ohn'] = joblib.load('S:\Projects\Smart Phone Prices Prediction\smartphone-price-classification\Smart Phone Prices Prediction\ohn.pkl')
+        artifacts['scaler'] = joblib.load('S:\Projects\Smart Phone Prices Prediction\smartphone-price-classification\Smart Phone Prices Prediction\scaler.pkl')
+
         artifacts['models'] = {
-            'K-Nearest Neighbors': joblib.load('C:\\smartphone price classification\\smartphone-price-classification\\Smart Phone Prices Prediction\\knn.pkl'),
-            'Decision Tree': joblib.load('C:\\smartphone price classification\\smartphone-price-classification\\Smart Phone Prices Prediction\\DT.pkl'),
-            'Random Forest': joblib.load('C:\\smartphone price classification\\smartphone-price-classification\\Smart Phone Prices Prediction\\RF.pkl'),
-            'Support Vector Machine': joblib.load('C:\\smartphone price classification\\smartphone-price-classification\\Smart Phone Prices Prediction\\SVM.pkl')
+            'K-Nearest Neighbors': joblib.load('S:\Projects\Smart Phone Prices Prediction\smartphone-price-classification\Smart Phone Prices Prediction\knn.pkl'),
+            'Decision Tree': joblib.load('S:\Projects\Smart Phone Prices Prediction\smartphone-price-classification\Smart Phone Prices Prediction\DT.pkl'),
+            'Random Forest': joblib.load('S:\Projects\Smart Phone Prices Prediction\smartphone-price-classification\Smart Phone Prices Prediction\RF.pkl'),
+            'Support Vector Machine': joblib.load('S:\Projects\Smart Phone Prices Prediction\smartphone-price-classification\Smart Phone Prices Prediction\SVM.pkl'),
+            'XGBOOST': joblib.load('S:\Projects\Smart Phone Prices Prediction\smartphone-price-classification\Smart Phone Prices Prediction\XGB.pkl')
         }
     except FileNotFoundError as e:
-        st.error(f"Error loading files: {e}. Please ensure all .pkl files are in the correct directory.")
+        st.error(f"Error loading files: {e}")
         return None
     return artifacts
 
@@ -111,14 +122,14 @@ def preprocess_input(data, artifacts):
     final_df = pd.DataFrame(np.zeros((1,len(selected_features))), columns=selected_features)
     for col in selected_features:
         if col in df.columns:
-            final_df[col] = df[col].values
+            final_df[col] = df[col].values[0]
 
     # Scaling
     scaler = artifacts['scaler']
     scaled_array = scaler.transform(final_df)
-    final_df_scaled = pd.DataFrame(scaled_array, columns=final_df.columns, index=final_df.index)
+    #final_df_scaled = pd.DataFrame(scaled_array, columns=final_df.columns, index=final_df.index)
 
-    return final_df_scaled
+    return scaled_array
 
 # --- 3. Streamlit UI ---
 st.title("📱 Smartphone Price Classifier")
@@ -219,8 +230,39 @@ if artifacts:
             prediction = model.predict(processed_data)[0]
             st.write("---")
             if prediction == 1:
-                st.success("💎 Prediction: Expensive")
+                st.markdown("""
+                                               <div style="
+                                                   background-color: #ff4b4b; 
+                                                   color: white; 
+                                                   padding: 15px; 
+                                                   border-radius: 10px; 
+                                                   text-align: center; 
+                                                   font-size: 20px; 
+                                                   font-weight: bold; 
+                                                   border: 2px solid #bd2130;
+                                                   width: 60%;
+                                                   margin: 0 auto 10px auto;
+                                               ">
+                                                   (Expensive)
+                                               </div>
+                                               """, unsafe_allow_html=True)
             else:
-                st.info("💰 Non-Expensive")
+
+                st.markdown("""
+                                <div style="
+                                    background-color: #ff4b4b; 
+                                    color: white; 
+                                    padding: 15px; 
+                                    border-radius: 10px; 
+                                    text-align: center; 
+                                    font-size: 20px; 
+                                    font-weight: bold; 
+                                    border: 2px solid #bd2130;
+                                    width: 60%; 
+                                    margin: 0 auto 10px auto;
+                                ">
+                                    (Non-Expensive)
+                                </div>
+                                """, unsafe_allow_html=True)
 else:
     st.warning("Artifacts could not be loaded. Please check your files.")
