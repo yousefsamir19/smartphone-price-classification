@@ -33,17 +33,17 @@ def load_artifacts():
     artifacts = {}
     try:
 
-        artifacts['oe'] = joblib.load('S:\Projects\Smart Phone Prices Prediction\smartphone-price-classification\Smart Phone Prices Prediction\oe.pkl')
-        artifacts['te'] = joblib.load('S:\Projects\Smart Phone Prices Prediction\smartphone-price-classification\Smart Phone Prices Prediction\\te.pkl')
-        artifacts['ohn'] = joblib.load('S:\Projects\Smart Phone Prices Prediction\smartphone-price-classification\Smart Phone Prices Prediction\ohn.pkl')
-        artifacts['scaler'] = joblib.load('S:\Projects\Smart Phone Prices Prediction\smartphone-price-classification\Smart Phone Prices Prediction\scaler.pkl')
+        artifacts['oe'] = joblib.load('oe.pkl')
+        artifacts['te'] = joblib.load('te.pkl')
+        artifacts['ohn'] = joblib.load('ohn.pkl')
+        artifacts['scaler'] = joblib.load('scaler.pkl')
 
         artifacts['models'] = {
-            'K-Nearest Neighbors': joblib.load('S:\Projects\Smart Phone Prices Prediction\smartphone-price-classification\Smart Phone Prices Prediction\knn.pkl'),
-            'Decision Tree': joblib.load('S:\Projects\Smart Phone Prices Prediction\smartphone-price-classification\Smart Phone Prices Prediction\DT.pkl'),
-            'Random Forest': joblib.load('S:\Projects\Smart Phone Prices Prediction\smartphone-price-classification\Smart Phone Prices Prediction\RF.pkl'),
-            'Support Vector Machine': joblib.load('S:\Projects\Smart Phone Prices Prediction\smartphone-price-classification\Smart Phone Prices Prediction\SVM.pkl'),
-            'XGBOOST': joblib.load('S:\Projects\Smart Phone Prices Prediction\smartphone-price-classification\Smart Phone Prices Prediction\XGB.pkl')
+            'K-Nearest Neighbors': joblib.load('knn.pkl'),
+            'Decision Tree': joblib.load('DT.pkl'),
+            'Random Forest': joblib.load('RF.pkl'),
+            'Support Vector Machine': joblib.load('SVM.pkl'),
+            'XGBOOST': joblib.load('XGB.pkl')
         }
     except FileNotFoundError as e:
         st.error(f"Error loading files: {e}")
